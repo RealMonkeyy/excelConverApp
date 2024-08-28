@@ -27,7 +27,7 @@ def format_conversion(request):
             wb = openpyxl.load_workbook(file_path)
             
             # 設定ファイルを読み込む（エンコーディングを指定）
-            with open(os.path.join(settings.BASE_DIR, 'excelapp/itemMapping/column_mapping.json'), 'r', encoding='utf-8') as f:
+            with open(os.path.join(settings.BASE_DIR, 'excelapp/itemMapping/フリーウェイにインポートする.json'), 'r', encoding='utf-8') as f:
                 column_mapping = json.load(f)
             
             logger.info(f"Column mapping: {column_mapping}")
