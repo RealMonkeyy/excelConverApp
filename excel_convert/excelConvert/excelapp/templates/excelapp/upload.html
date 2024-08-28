@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}フォーマット変換{% endblock %}
+
+{% block page_title %}フォーマット変換{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-body">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="{{ form.file.id_for_label }}" class="form-label">ファイルを選択</label>
+                <div class="input-group">
+                    <input type="file" class="form-control" id="{{ form.file.id_for_label }}" name="{{ form.file.name }}" accept=".xlsx,.xls">
+                    <label class="input-group-text" for="{{ form.file.id_for_label }}">参照</label>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">アップロード</button>
+        </form>
+    </div>
+</div>
+<br>
+<h2>フォーマット変換（２）</h2>
+<div class="card">
+  <div class="card-body">
+      <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="mb-3">
+              <label for="{{ form.file.id_for_label }}" class="form-label">ファイルを選択</label>
+              <div class="input-group">
+                  <input type="file" class="form-control" id="{{ form.file.id_for_label }}" name="{{ form.file.name }}" accept=".xlsx,.xls">
+                  <label class="input-group-text" for="{{ form.file.id_for_label }}">参照</label>
+              </div>
+          </div>
+          <button type="submit" class="btn btn-primary">アップロード</button>
+      </form>
+  </div>
+</div>
+<br>
+<h2>フォーマット変換（３）</h2>
+<div class="card">
+  <div class="card-body">
+      <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="mb-3">
+              <label for="{{ form.file.id_for_label }}" class="form-label">ファイルを選択</label>
+              <div class="input-group">
+                  <input type="file" class="form-control" id="{{ form.file.id_for_label }}" name="{{ form.file.name }}" accept=".xlsx,.xls">
+                  <label class="input-group-text" for="{{ form.file.id_for_label }}">参照</label>
+              </div>
+          </div>
+          <button type="submit" class="btn btn-primary">アップロード</button>
+      </form>
+  </div>
+</div>
+<br>
+<h2>フォーマット変換（４）</h2>
+<div class="card">
+  <div class="card-body">
+      <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="mb-3">
+              <label for="{{ form.file.id_for_label }}" class="form-label">ファイルを選択</label>
+              <div class="input-group">
+                  <input type="file" class="form-control" id="{{ form.file.id_for_label }}" name="{{ form.file.name }}" accept=".xlsx,.xls">
+                  <label class="input-group-text" for="{{ form.file.id_for_label }}">参照</label>
+              </div>
+          </div>
+          <button type="submit" class="btn btn-primary">アップロード</button>
+      </form>
+  </div>
+</div>
+{% endblock %}
