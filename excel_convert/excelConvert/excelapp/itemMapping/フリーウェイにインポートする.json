@@ -90,5 +90,12 @@
         "keyFlag": "",
         "minusFlag": "",
         "numMinus": 30
+    },
+    "固定控除名称1" : {
+        "data": "",
+        "kotei": "チケットレストラン",
+        "sheet": "",
+        "keyFlag": "",
+        "minusFlag": ""
     }
 }

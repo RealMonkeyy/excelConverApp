@@ -1,0 +1,23 @@
+{
+    "従業員番号" : {
+        "data": "社員番号",
+        "sheet": 1,
+        "kotei": "",
+        "keyFlag": "true",
+        "minusFlag": ""
+    },  
+    "給与支給日" : {
+        "data": "",
+        "kotei": "2024/8/23",
+        "sheet": "",
+        "keyFlag": "",
+        "minusFlag": ""
+    },
+    "固定支給金額2" : {
+        "data": "企業型DC",
+        "kotei": "",
+        "sheet": 2,
+        "keyFlag": "",
+        "minusFlag": "true"
+    }
+}

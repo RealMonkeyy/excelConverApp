@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
-from .forms import UploadFileForm
+from .forms import UploadFileForm, ConfigurationFileForm
+from .models import ConfigurationFile
 import openpyxl
 import os
 import json
@@ -12,13 +13,47 @@ import math
 logger = logging.getLogger(__name__)
 
 def config_upload(request):
-    return render(request, 'excelapp/config_upload.html')
+    if request.method == 'POST':
+        form = ConfigurationFileForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('config_list')
+    else:
+        form = ConfigurationFileForm()
+    return render(request, 'excelapp/config_upload.html', {'form': form})
+
+def config_list(request):
+    configurations = ConfigurationFile.objects.all()
+    return render(request, 'excelapp/config_list.html', {'configurations': configurations})
+
+def config_edit(request, pk):
+    config = get_object_or_404(ConfigurationFile, pk=pk)
+    if request.method == 'POST':
+        form = ConfigurationFileForm(request.POST, instance=config)
+        if form.is_valid():
+            form.save()
+            return redirect('config_list')
+    else:
+        form = ConfigurationFileForm(instance=config)
+    return render(request, 'excelapp/config_edit.html', {'form': form, 'config': config})
+
+def config_delete(request, pk):
+    config = get_object_or_404(ConfigurationFile, pk=pk)
+    if request.method == 'POST':
+        config.delete()
+        return redirect('config_list')
+    return render(request, 'excelapp/config_delete_confirm.html', {'config': config})
 
 def format_conversion(request):
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
             file = request.FILES['file']
+            config_id = request.POST.get('config_id')
+            
+            config = get_object_or_404(ConfigurationFile, id=config_id)
+            column_mapping = config.content
+
             file_path = os.path.join(settings.MEDIA_ROOT, file.name)
             
             with open(file_path, 'wb+') as destination:
@@ -26,9 +61,6 @@ def format_conversion(request):
                     destination.write(chunk)
             
             wb = openpyxl.load_workbook(file_path)
-            
-            with open(os.path.join(settings.BASE_DIR, 'excelapp/itemMapping/フリーウェイにインポートする.json'), 'r', encoding='utf-8') as f:
-                column_mapping = json.load(f)
             
             logger.info(f"Column mapping: {column_mapping}")
 
@@ -54,7 +86,6 @@ def format_conversion(request):
                     sheet1_data = sheet_data[wb.sheetnames[0]]['data']
                     sheet2_data = sheet_data[wb.sheetnames[1]]['data']
                     
-                    # キー項目がないデータを除外
                     sheet1_dict = {row[key_data]: row for row in sheet1_data if key_data in row and row[key_data] is not None and str(row[key_data]).strip() != ""}
                     sheet2_dict = {row[key_data]: row for row in sheet2_data if key_data in row and row[key_data] is not None and str(row[key_data]).strip() != ""}
                     
@@ -65,7 +96,6 @@ def format_conversion(request):
                     combined_data = list(sheet1_dict.values())
                     sheet_data['combined'] = {'headers': sheet_data[wb.sheetnames[0]]['headers'] + sheet_data[wb.sheetnames[1]]['headers'], 'data': combined_data}
                 else:
-                    # 1枚のシートの場合もキー項目がないデータを除外
                     sheet_data['combined'] = {
                         'headers': sheet_data[wb.sheetnames[0]]['headers'],
                         'data': [row for row in sheet_data[wb.sheetnames[0]]['data'] if key_data in row and row[key_data] is not None and str(row[key_data]).strip() != ""]
@@ -127,4 +157,5 @@ def format_conversion(request):
             return response
     else:
         form = UploadFileForm()
-    return render(request, 'excelapp/upload.html', {'form': form})
+        configurations = ConfigurationFile.objects.all()
+    return render(request, 'excelapp/upload.html', {'form': form, 'configurations': configurations})

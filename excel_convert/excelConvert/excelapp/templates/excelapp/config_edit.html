@@ -1,20 +1,21 @@
 {% extends 'base.html' %}
 {% load widget_tweaks %}
+
 {% block content %}
 <div class="row">
     <div class="col-md-8 offset-md-2">
-        <h2 class="mb-4">設定ファイル登録</h2>
+        <h2 class="mb-4">設定ファイル編集</h2>
         <form method="post">
             {% csrf_token %}
             <div class="mb-3">
                 <label for="{{ form.title.id_for_label }}" class="form-label">タイトル</label>
-                {{ form.title|add_class:"form-control" }}
+                {% render_field form.title class="form-control" %}
             </div>
             <div class="mb-3">
                 <label for="{{ form.content.id_for_label }}" class="form-label">JSON内容</label>
-                {{ form.content|add_class:"form-control" }}
+                {% render_field form.content class="form-control" %}
             </div>
-            <button type="submit" class="btn btn-primary">登録</button>
+            <button type="submit" class="btn btn-primary">更新</button>
         </form>
     </div>
 </div>
