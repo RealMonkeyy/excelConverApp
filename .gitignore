@@ -1,4 +1,5 @@
-excel_convert/excelConvert/excelConvert/__pycache__/
-excel_convert/excelConvert/excelapp/__pycache__/
-excel_convert/excelConvert/excelapp/migrations/__pycache__/
-excel_convert/excelConvert/①（勤怠、経費、交通費）KANGENからもらうフォーマット.xlsx
+excelConvert/__pycache__/
+excelapp/__pycache__/
+excelapp/migrations/__pycache__/
+excelapp/templatetags/__pycache__/
+①（勤怠、経費、交通費）KANGENからもらうフォーマット.xlsx
